@@ -1,0 +1,4 @@
+[
+  { file: "game:blocktypes/soil/farmland", op: "add", path: "/behaviors",
+    value: [{ name: "FarmlandDropsSoilBehavior" }] }
+]
