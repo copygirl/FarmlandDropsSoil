@@ -10,13 +10,16 @@ namespace FarmlandDropsSoil
 		public FarmlandDropsSoilBehavior(Block block)
 			: base(block) {  }
 
-		public override void OnBlockBroken(
-			IWorldAccessor world, BlockPos pos,
-			IPlayer byPlayer, ref EnumHandling handling)
+		public override ItemStack[] GetDrops(
+			IWorldAccessor world, BlockPos pos, IPlayer byPlayer,
+			ref float dropChanceMultiplier, ref EnumHandling handling)
 		{
-			if ((byPlayer.WorldData.CurrentGameMode == EnumGameMode.Creative) ||
-				!(world.BlockAccessor.GetBlockEntity(pos) is BlockEntityFarmland farmland))
-				return;
+			if ((byPlayer?.WorldData.CurrentGameMode == EnumGameMode.Creative) ||
+			    (world.BlockAccessor.GetBlockEntity(pos) is not BlockEntityFarmland farmland))
+				return new ItemStack[0];
+			
+			// Prevent other behaviors from running after this one.
+			handling = EnumHandling.PreventSubsequent;
 			
 			// Get the lowest nutrient value (out of N, P and K) relative
 			// to the farmland's default nutrient levels (its fertility).
@@ -24,11 +27,11 @@ namespace FarmlandDropsSoil
 			
 			// If this nutrient is below 95%, there is a chance the soil won't drop.
 			if ((nutrients < 0.95) && (world.Rand.NextDouble() > nutrients))
-				return;
+				return new ItemStack[0];
 			
 			var fertility = this.block.FirstCodePart(2);
 			var block = world.GetBlock(new AssetLocation("game", $"soil-{fertility}-none"));
-			world.SpawnItemEntity(new ItemStack(block), new Vec3d(pos.X + 0.5, pos.Y + 0.5, pos.Z + 0.5), null);
+			return new ItemStack[]{ new(block) };
 		}
 	}
 }
