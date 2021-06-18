@@ -1,13 +1,13 @@
 {
 	"type": "code",
 	"name": "Farmland Drops Soil",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	
 	"description": "Farmland has a change to drop soil depending on nutrient levels",
 	"website": "https://www.vintagestory.at/forums/topic/1209-farmland-drops-soil-v120/",
 	"authors": [ "copygirl" ],
 	
 	"dependencies": {
-		"game": "*"
+		"game": "1.15.0-pre.3"
 	}
 }

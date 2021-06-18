@@ -4,9 +4,9 @@
 		<AssemblyTitle>Farmland Drops Soil</AssemblyTitle>
 		<Description>Vintage Story mod that makes farmland have a chance to drop soil depending on nutrient levels</Description>
 		<Authors>copygirl</Authors>
-		<Version>1.2.0</Version>
+		<Version>1.4.0</Version>
 		
-		<TargetFramework>net452</TargetFramework>
+		<TargetFramework>net461</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		
 	</PropertyGroup>

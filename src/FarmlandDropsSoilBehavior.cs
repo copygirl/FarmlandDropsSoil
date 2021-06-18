@@ -21,9 +21,10 @@ namespace FarmlandDropsSoil
 			// Prevent other behaviors from running after this one.
 			handling = EnumHandling.PreventSubsequent;
 			
-			// Get the lowest nutrient value (out of N, P and K) relative
-			// to the farmland's default nutrient levels (its fertility).
-			var nutrients = farmland.Nutrients.Min() / farmland.OriginalFertility;
+			// Divide each type of nutrient (N, P and K) by its original, "full"
+			// fertility to get a value from 0 to 1. Then pick the lowest one.
+			var nutrients = farmland.Nutrients.Zip(farmland.OriginalFertility,
+				(current, original) => current / original).Min();
 			
 			// If this nutrient is below 95%, there is a chance the soil won't drop.
 			if ((nutrients < 0.95) && (world.Rand.NextDouble() > nutrients))
